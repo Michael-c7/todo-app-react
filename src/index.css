@@ -47,7 +47,7 @@ ul {
   transform: translate(-50%, -25%);
   text-align: center;
   border-radius: 10px;
-  filter:drop-shadow(10px 10px 10px rgba(125, 125, 125, 0.15));
+  filter:drop-shadow(7px 7px 7px rgba(125, 125, 125, 0.07));
 }
 
 
