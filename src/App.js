@@ -2,16 +2,48 @@ import React, {useState, useEffect} from 'react'
 import List from "./List"
 
 const App = () => {
-  const [inputText, setInputText] = useState("")
-  const [todoItems, setTodoItems] = useState([])
-  const [isEditing, setIsEdiiting] = useState(false);
-  const [editingID, setEditingID] = useState(null)
+  const [inputText, setInputText] = useState("");
+  const [todoItems, setTodoItems] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingID, setEditingID] = useState(null);
 
 
   const handleSubmit = e => {
     e.preventDefault()
-    setTodoItems([...todoItems, {id: new Date().getTime().toString(), item:inputText}])
-    console.log(inputText)
+
+    if(inputText === "") {
+      return;
+    } else if(isEditing) {
+      // editing stuff
+      // const newItem = {id: new Date().getTime().toString(), item:todoItems.filter((item) => item.id === editingID)};
+      // setTodoItems([...todoItems, newItem])
+
+            /*
+      const newItem = {id: new Date().getTime().toString(), title:name}
+      setList([...list, newItem])
+      */
+
+      // reset everything
+      setInputText("")
+      setIsEditing(false)
+      setEditingID(null)
+    } else {
+      setTodoItems([...todoItems, {id: new Date().getTime().toString(), item:inputText}])
+      setInputText("")
+    }
+
+  }
+
+  const deleteItem = id => 
+    setTodoItems(todoItems.filter((item) => item.id !== id));
+
+  
+  const editItem = (id, item) => {
+    setIsEditing(true)
+    setEditingID(id)
+    // const currentItem = todoItems.filter((item) => item.id === id);
+    setInputText(item)
+
   }
 
 
@@ -24,12 +56,12 @@ const App = () => {
         <input className="form__input" type="text" name="item"
           id="item" maxLength="40" placeholder="Eg: Buy Bread" autoFocus={true}
           value={inputText} onChange={(e) => setInputText(e.target.value)}/>
-        <button className="form__submit-btn" type="submit">Submit</button>
+        <button className="form__submit-btn" type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
 
-      <List todoItems={todoItems}/>
+      <List todoItems={todoItems} deleteItem={deleteItem} editItem={editItem}/>
 
-      {todoItems.length > 0 ? <button className="delete-all-btn" type="button">Clear Items</button> : ""}
+      {todoItems.length > 0 ? <button className="delete-all-btn" onClick={() => setTodoItems([])}>Clear Items</button> : ""}
     </section>
 
 
