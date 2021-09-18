@@ -6,6 +6,7 @@ const App = () => {
   const [todoItems, setTodoItems] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingID, setEditingID] = useState(null);
+  const [popupMsg, setPopupMsg] = useState({isShown:false, type:"", msg:""})
 
 
   const handleSubmit = e => {
@@ -15,20 +16,23 @@ const App = () => {
       return;
     } else if(isEditing) {
       // editing stuff
-      // const newItem = {id: new Date().getTime().toString(), item:todoItems.filter((item) => item.id === editingID)};
-      // setTodoItems([...todoItems, newItem])
+      const newItem = {id: editingID, item:inputText}
 
-            /*
-      const newItem = {id: new Date().getTime().toString(), title:name}
-      setList([...list, newItem])
-      */
+      let x = [...todoItems, newItem];
 
+      let final = todoItems.filter((item) => item.id === editingID)
+
+
+      console.log(final)
+      setTodoItems([...final, newItem])
       // reset everything
       setInputText("")
       setIsEditing(false)
       setEditingID(null)
     } else {
+      // add an item
       setTodoItems([...todoItems, {id: new Date().getTime().toString(), item:inputText}])
+      popupMsgFunctionality(true, "green", "Item added")
       setInputText("")
     }
 
@@ -45,10 +49,25 @@ const App = () => {
     setInputText(item)
 
   }
+  
+
+  const popupMsgFunctionality = (isShown, type, msg) => {
+    const timeout = setTimeout(() => {
+      setPopupMsg({isShown, type, msg})
+    }, 3000);
+
+    timeout()
+
+    // return clearTimeout(timeout)
+    
+  }
 
 
   return (
     <section className="todo">
+
+      {popupMsg.isShown ? <article className="popup-msg">item added</article> : ""}
+      
       <h1 className="todo-header">Todo app</h1>
 
       <form className="todo__form" onSubmit={handleSubmit}>

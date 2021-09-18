@@ -50,6 +50,33 @@ ul {
   filter:drop-shadow(7px 7px 7px rgba(125, 125, 125, 0.07));
 }
 
+@media(max-width:600px) {
+  .todo {
+    width:90%;
+  }
+}
+
+
+.popup-msg {
+  background:#efefef;
+  width:90%;
+  margin:2rem auto 0 auto;
+  padding:0.1rem;
+  border-radius: 5px;
+  letter-spacing: 0.25px;
+
+  /* display:none; */
+}
+
+.popup-msg--green {
+ background-color: #D4EDDA;
+ /* display:block; */
+}
+
+.popup-msg--red {
+  background:#F8D7DA;
+  /* display:block; */
+}
 
 .todo-header {
   font-size:2rem;
